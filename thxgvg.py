@@ -132,6 +132,87 @@ def sort_ab(a, b):
     return merged_list
 
 
+class Node(object):
+    """Nodes for a linked list"""
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+        return
+
+
+class LL(object):
+    """Linked list of nodes"""
+
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        return
+
+
+    def append_node(self, data):
+        """Add node with data to end of list."""
+        
+        new_node = Node(data)
+
+        if self.head is None:
+            self.head = new_node
+
+        if self.tail is not None:
+            self.tail.next = new_node
+
+        self.tail = new_node
+
+        return
+
+
+    def print_LL(self):
+        """Print all items in the linked list"""
+        current = self.head
+
+        while current is not None:
+            print current.data
+            current = current.next
+        return
+
+
+    def traverse_LL(self):
+        """Traverse a linked list and return list of nodes"""
+        current = self.head
+        node_list = []
+        while current is not None:
+            node_list.append(current.data)
+            current = current.next
+
+        return node_list
+
+
+    def reverse_LL(self):
+        """Takes the head node of a linked list and returns the head of a new,
+        reversed linked list."""
+        # traverse the LL to find the end, simultaneously storing nodes in a stack
+        node_list = self.traverse_LL()
+        
+        # at the end, move head to end
+        self.head = node_list.pop()
+
+        # pop items off stack into new LL
+        while node_list:
+            self.append_node(node_list.pop())
+        
+        return
+
+
 if __name__ == "__main__":
     import doctest
-    # doctest.testmod()
+    doctest.testmod()
+
+    my_list = [1, 2, 3, 4, 5]
+    my_LL = LL()
+    for item in my_list:
+        my_LL.append_node(item)
+    my_LL.print_LL()
+    my_LL.reverse_LL()
+    my_LL.print_LL()
+
