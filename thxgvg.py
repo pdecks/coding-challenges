@@ -59,6 +59,39 @@ def is_prime(num):
     return True
 
 
+def lucky_numbers(n):
+    """Return n unique random numbers from 1-10 (inclusive).
+
+    Given the numbers 1-10, return n random numbers, making sure to never return
+    the same number twice. You can trust that this function will never be called
+    with n < 0 or n > 10.
+
+    # >>> lucky_numbers(2)
+    # [3, 7]
+
+    >>> lucky_numbers(0)
+    []
+
+    >>> sorted(lucky_numbers(10))
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    """
+    if n == 0:
+        return []
+    
+    import random
+    nums = list(xrange(1, 11))
+    lucky_nums = []
+
+    i = 0
+    while i < n:
+        value = random.choice(nums)
+        nums.remove(value)
+        lucky_nums.append(value)
+        i += 1
+
+    return lucky_nums
+
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
