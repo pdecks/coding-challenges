@@ -203,10 +203,69 @@ class LL(object):
         
         return
 
+def make_anagram_dict(words):
+    """Return dictionary mapping sorted letters to list of words with those chars
+        
+        >>> make_anagram_dict(["act", "cat", "dog", "mouse", "god"])
+        {'emosu': ['mouse'], 'dgo': ['dog', 'god'], 'act': ['act', 'cat']}
+    """
+    anagram_dict = {}
+
+    for word in words:
+        sorted_word = "".join(sorted(word))
+        anagram_dict.setdefault(sorted_word, []).append(word)
+
+    return anagram_dict
+
+
+def find_most_anagrams_from_wordlist(wordlist):
+    """Given a list of words, return the word with the most anagrams.
+
+    For a list of ['act', 'cat', 'bill']:
+    - 'act' and 'cat' are anagrams, so they both have 2 matching words.
+    - 'bill' has no anagrams, os it has one matching word (itself).
+
+    Given that 'act' is the first instance of the most-anagrammed word,
+    we return that.
+
+    >>> find_most_anagrams_from_wordlist(['act', 'cat', 'bill'])
+    'act'
+
+    Let's use a file of words where each line is a word:
+
+    >>> all_words = [w.strip() for w in open('words.txt')]
+    >>> find_most_anagrams_from_wordlist(all_words)
+    'angor'
+    """
+    # note, I first tried to solve this with an ordered dict and permutations,
+    # but the runtime on that was ridiculous. Much faster to solve with sorted
+    # word
+    
+    # create a dictionary of anagrams
+    anagrams_dict = make_anagram_dict(wordlist)
+
+    # create variables to keep track of make value
+    highest_num_anagrams = 0
+    most_anagrams = None
+
+    # for each word in wordlist, check if sorted word in anagrams_dict
+    for word in wordlist:
+        sorted_word = "".join(sorted(word))
+        # get the number of words for that key
+        number_anagrams = len(anagrams_dict[sorted_word])
+        # compare against current max
+        if number_anagrams > highest_num_anagrams:
+            highest_num_anagrams = number_anagrams
+            most_anagrams = word
+
+    return most_anagrams
+
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
+
+    if doctest.testmod().failed == 0:
+        print "\n*** ALL TESTS PASSED. YAY!\n"
 
     # my_list = ['apple', 'berry', 'cherry']
     my_list = [1, 2, 3, 4, 5]
