@@ -113,30 +113,21 @@ def sort_ab(a, b):
         >>> sort_ab([1, 3, 5, 7], [2, 6, 8, 10])
         [1, 2, 3, 5, 6, 7, 8, 10]
     """
+    # initialize new, empty list for results
     merged_list = []
 
-    # find shorter list
-    if len(a) < len(b):
-        shorter_list = a[:]
-        longer_list = b[:]
-    else:
-        shorter_list = b[:]
-        longer_list = a[:]
-
-    # iterate on list a, checking if next value in list b is smaller
-    for val_a in shorter_list:
-        for val_b in longer_list:
-            print "this is val_a", val_a
-            print "this is val_b", val_b
-            if val_a < val_b:
-                merged_list.append(val_a)
-                shorter_list.pop(val_a)
-            else:
-                merged_list.append(val_b)
-                longer_list.pop(val_b)
-
-    # add remaining items to list
-    merged_list.extend(longer_list)
+    # compare first element of each sorted list until one of them is empty
+    while len(a) > 0 or len(b) > 0:
+        # append the remaining items from the non-empty list to results list
+        if a == []:
+            merged_list.append(b.pop(0))
+        elif b == []:
+            merged_list.append(a.pop(0))
+        # remove whichever is lower and add it to the results
+        elif a[0] < b[0]:
+            merged_list.append(a.pop(0))
+        else:
+            merged_list.append(b.pop(0))
 
     return merged_list
 
