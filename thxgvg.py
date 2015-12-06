@@ -182,7 +182,7 @@ class LL(object):
         current = self.head
         node_list = []
         while current is not None:
-            node_list.append(current.data)
+            node_list.append(current)
             current = current.next
 
         return node_list
@@ -199,7 +199,7 @@ class LL(object):
 
         # pop items off stack into new LL
         while node_list:
-            self.append_node(node_list.pop())
+            self.append_node(node_list.pop().data)
         
         return
 
@@ -208,11 +208,14 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
+    # my_list = ['apple', 'berry', 'cherry']
     my_list = [1, 2, 3, 4, 5]
     my_LL = LL()
     for item in my_list:
         my_LL.append_node(item)
+    print "Printing Linked List ..."
     my_LL.print_LL()
     my_LL.reverse_LL()
+    print "Printing Reversed Linked List ..."
     my_LL.print_LL()
 
