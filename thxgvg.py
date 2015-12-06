@@ -240,7 +240,7 @@ def find_most_anagrams_from_wordlist(wordlist):
     # note, I first tried to solve this with an ordered dict and permutations,
     # but the runtime on that was ridiculous. Much faster to solve with sorted
     # word
-    
+
     # create a dictionary of anagrams
     anagrams_dict = make_anagram_dict(wordlist)
 
@@ -259,6 +259,61 @@ def find_most_anagrams_from_wordlist(wordlist):
             most_anagrams = word
 
     return most_anagrams
+
+
+
+class TNode(object):
+    """Node in a tree."""
+
+    def __init__(self, name, children=None):
+        self.name = name
+        self.children = children or []
+
+    def count_employees(self):
+        """Return a count of how many employees this person manages.
+
+        Return a count of how many people that manager manages. This should
+        include *everyone* under them, not just people who directly report to
+        them.
+
+        Let's make this chart:
+
+            >>> henri = TNode("Henri")
+            >>> nora = TNode("Nora", [henri])
+            >>> nick = TNode("Nick")
+            >>> janet = TNode("Janet", [nick, nora])
+            >>> al = TNode("Al")
+            >>> bob = TNode("Bob")
+            >>> jen = TNode("Jen")
+            >>> jessica = TNode("Jessica", [al, bob, jen])
+            >>> jane = TNode("Jane", [jessica, janet])
+
+        And test our counting function:
+
+            >>> henri.count_employees()
+            0
+
+            >>> nora.count_employees()
+            1
+
+            >>> jane.count_employees()
+            8
+        """
+        # find the person in the tree
+        to_visit = [self]
+
+        ch_count = 0
+        while to_visit:
+            emp = to_visit.pop()
+            for child in emp.children:
+                ch_count += 1
+                to_visit.append(child)
+            
+        return ch_count
+
+
+    def __repr__(self):
+        return "<TNode %s>" % self.name
 
 
 if __name__ == "__main__":
